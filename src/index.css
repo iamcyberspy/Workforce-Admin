@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Manrope", sans-serif;
+
+  --color-primary: #FF8B3D;
+  --color-primary-container: #FCA311;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #432C0B;
+  
+  --color-secondary: #FFD08A;
+  --color-secondary-container: #FFF5E1;
+  --color-on-secondary: #432C0B;
+  --color-on-secondary-container: #D6A15E;
+
+  --color-tertiary: #4CC9F0;
+  --color-tertiary-container: #E1F5FE;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #00B0FF;
+
+  --color-surface: #FFFBEB;
+  --color-surface-dim: #FFECB3;
+  --color-surface-bright: #FFFBEB;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #FFF9E5;
+  --color-surface-container: #FFF4D1;
+  --color-surface-container-high: #FFEEB8;
+  --color-surface-container-highest: #FFD08A;
+
+  --color-on-surface: #432C0B;
+  --color-on-surface-variant: #D6A15E;
+  --color-outline: #D6A15E;
+  --color-outline-variant: #FFD08A;
+
+  --color-error: #FF4444;
+  --color-error-container: #FFE5E5;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #880000;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+}
+
+.prism-header {
+  background: linear-gradient(135deg, #FF8B3D 0%, #FCA311 100%);
+}
+
+.glass-panel {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
