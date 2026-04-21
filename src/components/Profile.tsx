@@ -1,17 +1,22 @@
 import { motion } from 'motion/react';
 import { 
   Mail, Phone, MapPin, Edit3, MoreHorizontal, 
-  ChevronRight, ArrowLeft, MessageSquare, Info, Star 
+  ChevronRight, ArrowLeft, MessageSquare, Info, Star, Users 
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Employee } from '../types';
+import { MOCK_EMPLOYEES } from '../constants';
 
 interface ProfileProps {
   employee: Employee;
   onBack: () => void;
+  onSelectEmployee: (emp: Employee) => void;
 }
 
-export function Profile({ employee, onBack }: ProfileProps) {
+export function Profile({ employee, onBack, onSelectEmployee }: ProfileProps) {
+  // Simulate direct reports by taking a subset of mock employees
+  const directReports = MOCK_EMPLOYEES.filter(emp => emp.id !== employee.id).slice(0, 3);
+  
   const careerJourney = [
     { 
       date: 'Present Day', 
@@ -104,6 +109,39 @@ export function Profile({ employee, onBack }: ProfileProps) {
               <InfoRow label="Activation" value={employee.startDate || 'N/A'} />
               <InfoRow label="Contract" value={employee.employmentType || 'N/A'} noBorder />
             </div>
+          </div>
+
+          <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border-2 border-[#FFD08A] border-opacity-50 space-y-8">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline font-black text-[#432C0B] text-2xl tracking-tight">Direct Reports</h3>
+              <div className="bg-primary-container/20 text-on-primary-container px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-[#FFD08A]">
+                {directReports.length} Unit Members
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              {directReports.map((report) => (
+                <div 
+                  key={report.id}
+                  onClick={() => onSelectEmployee(report)}
+                  className="group flex items-center gap-4 p-4 rounded-3xl bg-[#FFFBEB] border-2 border-transparent hover:border-[#FF8B3D] hover:bg-white transition-all cursor-pointer shadow-sm hover:shadow-lg"
+                >
+                  <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white shadow-md flex-shrink-0">
+                    <img src={report.avatar} className="w-full h-full object-cover" alt={report.name} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-black text-[#432C0B] text-sm leading-none truncate group-hover:text-primary transition-colors">{report.name}</p>
+                    <p className="text-[10px] font-bold text-[#D6A15E] uppercase tracking-widest mt-1.5 truncate">{report.role}</p>
+                  </div>
+                  <ChevronRight size={18} className="text-[#FFD08A] group-hover:text-primary group-hover:translate-x-1 transition-all" strokeWidth={3} />
+                </div>
+              ))}
+            </div>
+
+            <button className="w-full py-4 text-[10px] font-black text-[#D6A15E] uppercase tracking-[0.2em] border-2 border-dashed border-[#FFD08A] rounded-3xl hover:bg-white hover:text-primary hover:border-primary transition-all flex items-center justify-center gap-2">
+               <Users size={14} strokeWidth={3} />
+               Explore Full Unit Hierarchy
+            </button>
           </div>
         </div>
 

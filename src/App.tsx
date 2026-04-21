@@ -35,6 +35,7 @@ export default function App() {
             <Profile 
               employee={selectedEmployee || PROFILE_ELEANOR} 
               onBack={() => setView('directory')} 
+              onSelectEmployee={handleSelectEmployee}
             />
           )}
         </div>
