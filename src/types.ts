@@ -1,4 +1,4 @@
-export type View = 'login' | 'dashboard' | 'directory' | 'profile' | 'attendance';
+export type View = 'login' | 'dashboard' | 'directory' | 'profile' | 'attendance' | 'payroll';
 
 export interface Employee {
   id: string;

@@ -7,6 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { Directory } from './components/Directory';
 import { Profile } from './components/Profile';
 import { Attendance } from './components/Attendance';
+import { Payroll } from './components/Payroll';
 import { PROFILE_ELEANOR } from './constants';
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
           {view === 'dashboard' && <Dashboard />}
           {view === 'directory' && <Directory onSelectEmployee={handleSelectEmployee} />}
           {view === 'attendance' && <Attendance />}
+          {view === 'payroll' && <Payroll />}
           {view === 'profile' && (
             <Profile 
               employee={selectedEmployee || PROFILE_ELEANOR} 
