@@ -1,7 +1,21 @@
 import { motion } from 'motion/react';
-import { Users, LayoutGrid, Briefcase, History, Star, ArrowRight, UserPlus, Plus } from 'lucide-react';
+import { Users, LayoutGrid, Briefcase, History, Star, ArrowRight, UserPlus, Plus, TrendingUp, BarChart as BarChartIcon, Zap } from 'lucide-react';
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+  LineChart, Line, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend,
+  AreaChart, Area
+} from 'recharts';
 import { MOCK_ACTIVITIES, MOCK_EMPLOYEES } from '../constants';
 import { cn } from '../lib/utils';
+
+const PERFORMANCE_DATA = [
+  { name: 'Engineering', completion: 85, taskTime: 4.2, collaboration: 90 },
+  { name: 'Design', completion: 92, taskTime: 3.8, collaboration: 85 },
+  { name: 'Marketing', completion: 78, taskTime: 5.1, collaboration: 80 },
+  { name: 'HR', completion: 95, taskTime: 2.5, collaboration: 95 },
+  { name: 'Legal', completion: 88, taskTime: 4.8, collaboration: 65 },
+  { name: 'Sales', completion: 82, taskTime: 4.5, collaboration: 75 },
+];
 
 export function Dashboard() {
   const stats = [
@@ -112,6 +126,134 @@ export function Dashboard() {
           </div>
         </section>
       </div>
+
+      <section className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <h3 className="text-3xl font-black text-[#432C0B] tracking-tight">Team Performance Analytics</h3>
+            <p className="text-[#D6A15E] font-bold text-xs uppercase tracking-widest">Real-time indicators across organizational units</p>
+          </div>
+          <div className="flex gap-4">
+             <button className="bg-white border-2 border-[#FFD08A] text-[#D6A15E] px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-[#FFF4D1] transition-all flex items-center gap-2">
+                <History size={14} strokeWidth={3} />
+                Download Report
+             </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+          {/* Project Completion Rates */}
+          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border-2 border-[#FFD08A] border-opacity-30 flex flex-col h-[400px]">
+             <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center text-primary border border-[#FFD08A]/50">
+                   <TrendingUp size={20} strokeWidth={3} />
+                </div>
+                <h4 className="font-black text-[#432C0B] text-lg leading-none uppercase tracking-tight">Project Completion %</h4>
+             </div>
+             <div className="flex-1 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={PERFORMANCE_DATA}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#FFD08A" strokeOpacity={0.2} />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#D6A15E', fontSize: 10, fontWeight: 900 }} 
+                      interval={0}
+                    />
+                    <YAxis 
+                      hide 
+                      domain={[0, 100]}
+                    />
+                    <Tooltip 
+                      cursor={{ fill: '#FFFBEB' }}
+                      contentStyle={{ borderRadius: '1rem', border: '2px solid #FFD08A', fontWeight: 900, fontSize: '12px' }}
+                    />
+                    <Bar 
+                      dataKey="completion" 
+                      fill="#FF8B3D" 
+                      radius={[10, 10, 10, 10]} 
+                      barSize={32}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+             </div>
+          </div>
+
+          {/* Average Task Time */}
+          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border-2 border-[#FFD08A] border-opacity-30 flex flex-col h-[400px]">
+             <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center text-tertiary border border-[#FFD08A]/50">
+                   <Zap size={20} strokeWidth={3} />
+                </div>
+                <h4 className="font-black text-[#432C0B] text-lg leading-none uppercase tracking-tight">Average Task Time (Days)</h4>
+             </div>
+             <div className="flex-1 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={PERFORMANCE_DATA}>
+                    <defs>
+                      <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#FCA311" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#FCA311" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#FFD08A" strokeOpacity={0.2} />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#D6A15E', fontSize: 10, fontWeight: 900 }} 
+                    />
+                    <YAxis 
+                      hide
+                    />
+                    <Tooltip 
+                      contentStyle={{ borderRadius: '1rem', border: '2px solid #FFD08A', fontWeight: 900, fontSize: '12px' }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="taskTime" 
+                      stroke="#FCA311" 
+                      strokeWidth={4}
+                      fillOpacity={1} 
+                      fill="url(#colorTime)" 
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+             </div>
+          </div>
+
+          {/* Collaboration Scores */}
+          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border-2 border-[#FFD08A] border-opacity-30 flex flex-col h-[400px]">
+             <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center text-primary border border-[#FFD08A]/50">
+                   <BarChartIcon size={20} strokeWidth={3} />
+                </div>
+                <h4 className="font-black text-[#432C0B] text-lg leading-none uppercase tracking-tight">Inter-Dept Collaboration</h4>
+             </div>
+             <div className="flex-1 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="80%" data={PERFORMANCE_DATA}>
+                    <PolarGrid stroke="#FFD08A" strokeOpacity={0.5} />
+                    <PolarAngleAxis 
+                      dataKey="name" 
+                      tick={{ fill: '#D6A15E', fontSize: 10, fontWeight: 900 }}
+                    />
+                    <PolarRadiusAxis hide />
+                    <Radar
+                      name="Score"
+                      dataKey="collaboration"
+                      stroke="#FF8B3D"
+                      fill="#FF8B3D"
+                      fillOpacity={0.6}
+                      strokeWidth={3}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+             </div>
+          </div>
+        </div>
+      </section>
     </motion.div>
   );
 }
