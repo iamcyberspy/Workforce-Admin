@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { Directory } from './components/Directory';
 import { Profile } from './components/Profile';
+import { Attendance } from './components/Attendance';
 import { PROFILE_ELEANOR } from './constants';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <div className="flex-1 p-12 max-w-7xl mx-auto w-full">
           {view === 'dashboard' && <Dashboard />}
           {view === 'directory' && <Directory onSelectEmployee={handleSelectEmployee} />}
+          {view === 'attendance' && <Attendance />}
           {view === 'profile' && (
             <Profile 
               employee={selectedEmployee || PROFILE_ELEANOR} 
