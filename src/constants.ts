@@ -9,6 +9,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCI92-XbwxoeV8O8a8caVp1uPmQzEJyD6nRCDbpmHB46v8D5kbD77muxE2y0DdkcHVu8bvVa3CoskTHXBalk6y3BPYijOQdeSSpmI6uQkgpmmLaqUTETXiGICf3LYFupFSd4sTPnXLu1i2Czx5lbrN1f6y7LhdQPYhoqrYNKvyVlUWHDKoNr9ZnGRtnQM-P3T4lNxGzU_xirlkk4EBvdY2TWWQ1fxAvXHAYXClXhOXTJrSxfEKL0Z68N61I9nskMLkw6F0HKXBsKGA',
     tags: ['Design', 'Remote'],
     location: 'London, UK',
+    status: 'Active',
     email: 's.jenkins@executive-lens.com',
     phone: '+1 (555) 123-4567',
     workstation: 'Floor 12, Cluster C',
@@ -23,7 +24,8 @@ export const MOCK_EMPLOYEES: Employee[] = [
     department: 'Engineering',
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBv0if720N_MEYTq0s0sE6my5n2D4I1m1v5eLJb-aSmKA-hVmWwQIe5VbXEmctdkez_imRNrryrQKGDIFTR86nm-6KIxLmfGob7Zgx0eG51FnMJXO40R3d-AwSKdTUZCa8lI-Cgvn9Y2J6m750_FyMgoqGkAedALNhZ9vLwQw-LKCGpv-VpV_0TVNTCKB5Ru-caNggPkXSr7rXYoX7cEEGgfaTyDuUI6livdQ8B8C-vCii13ZDvq6U1ET3J0A62mgl1KaTJ6ruX2K8',
     tags: ['Engineering', 'On-site'],
-    location: 'London, UK'
+    location: 'London, UK',
+    status: 'Active'
   },
   {
     id: 'EL-44556-ER',
@@ -41,7 +43,7 @@ export const MOCK_EMPLOYEES: Employee[] = [
     department: 'Management',
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDegF7c6WDpr1oC57HUUqliGSLKaM7q5R2NPU565q2a89ueLuHoNdNjDD4fXhq30I1SL3uSkZPmzFY48vfiIfjMp-LiDfF9rbfYAJSeMjs0T3s44wKdF5T_woBM7PBkxwhR4WnyBmqEYcs27WFocZDK-QYof_PKnnBkg_0dq_3WnwxM7SX2oqwhpXi8iiGmEyKon8SaqYIsBqEps3q12t_oJuWeKNdWRs2o1y61sI9LEMV6L9xd6vGCcxZJAXg4DDgqOSUPFsMSls',
     tags: ['Management', 'Hiring'],
-    status: 'Exec'
+    status: 'On Leave'
   },
   {
     id: 'EL-77889-AM',
@@ -50,7 +52,8 @@ export const MOCK_EMPLOYEES: Employee[] = [
     department: 'Marketing',
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD5oBf4Sl2bMLjb2Im2j5hdSx5f2IsyypBU4cGnCyBpB0XBA0QHxc3oR29F_lAVuc0mP6H9OXRppFagF5wfaiMqwckUPAKC2r3JSF0383QBgacue3IGYbo8JshzxM8ijOlab45DPy7qKdrdLE8OBIq5x_DfFN_7FgG3Lkg7vG3xusroPkUE6qBJzmzGxCoufn11U9xj9RCxpNaEAYG8TXJ_GMZH-IEOFH0T7wYiRxOawSwffAy2E520YOmmSlZhy8JF6sN2NP4oGes',
     tags: ['Marketing', 'Creative'],
-    location: 'New York, NY'
+    location: 'New York, NY',
+    status: 'Active'
   },
   {
     id: 'EL-33445-JV',
@@ -59,7 +62,8 @@ export const MOCK_EMPLOYEES: Employee[] = [
     department: 'Engineering',
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB1x6OvCK_7VvYI01dzXZprGlwwGbkrZapmOXkRSpz5VI_ZQ5d8oiOaJQeaNhmG6SuVg3LLuicDIqEavrMGNjuf2bWEdmlkUEmBvwyPY4zujDNRGHuQVLFSvmtXC0Z24XQsfPZHUGWTKlZ9pR681N_AoYHmn3qfPuvTLd6VqygrsdG1347IcsGYlx0_V9TkEKUQa_tDLlWPBa3HpLyM7bQGO9htJoze6vRgU_aD_ukitGNwamYntEzFiJkKoeIz12Lq2BHA2csTrOE',
     tags: ['QA', 'Security'],
-    isTopPerformer: true
+    isTopPerformer: true,
+    status: 'Active'
   }
 ];
 

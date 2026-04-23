@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { UserPlus, MapPin, ChevronRight, Search, ChevronLeft, Star, Verified, Clock } from 'lucide-react';
+import { UserPlus, MapPin, ChevronRight, Search, ChevronLeft, Star, Verified, Clock, Filter } from 'lucide-react';
 import { MOCK_EMPLOYEES } from '../constants';
 import { cn } from '../lib/utils';
 import { Employee } from '../types';
@@ -9,7 +10,21 @@ interface DirectoryProps {
 }
 
 export function Directory({ onSelectEmployee }: DirectoryProps) {
+  const [activeDept, setActiveDept] = useState('All Teams');
+  const [statusFilter, setStatusFilter] = useState('All Status');
+  
   const categories = ['All Teams', 'Engineering', 'Design', 'Marketing', 'Human Resources', 'Legal'];
+  const statuses = ['All Status', 'Active', 'Away', 'On Leave'];
+
+  const filteredEmployees = MOCK_EMPLOYEES.filter(emp => {
+    const deptMatch = activeDept === 'All Teams' || emp.department === activeDept;
+    
+    // Determine status - default to 'Active' if not specified
+    const empStatus = emp.status || 'Active';
+    const statusMatch = statusFilter === 'All Status' || empStatus === statusFilter;
+    
+    return deptMatch && statusMatch;
+  });
 
   return (
     <motion.div 
@@ -21,7 +36,7 @@ export function Directory({ onSelectEmployee }: DirectoryProps) {
         <div className="flex flex-col md:flex-row justify-between items-end gap-6">
           <div className="space-y-2">
             <h2 className="font-headline text-4xl font-black text-[#432C0B] tracking-tight">Personnel Directory</h2>
-            <p className="text-[#D6A15E] font-bold text-sm tracking-wide">Orchestrating 1,248 global contributors with vibrant efficiency.</p>
+            <p className="text-[#D6A15E] font-bold text-sm tracking-wide">Orchestrating {filteredEmployees.length} global contributors with vibrant efficiency.</p>
           </div>
           <button className="bg-gradient-to-tr from-[#FF8B3D] to-[#FCA311] text-white px-10 py-4 rounded-full flex items-center gap-3 shadow-2xl shadow-primary/30 active:scale-[0.95] transition-all font-black text-sm uppercase tracking-widest leading-none">
             <UserPlus size={20} strokeWidth={3} />
@@ -30,31 +45,48 @@ export function Directory({ onSelectEmployee }: DirectoryProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          {categories.map((cat, i) => (
-            <button 
-              key={i} 
-              className={cn(
-                "px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2",
-                i === 0 ? "bg-primary text-white shadow-xl shadow-primary/20" : "bg-white border-2 border-[#FFD08A] text-[#D6A15E] hover:bg-[#FF8B3D] hover:text-white"
-              )}
-            >
-              {cat} 
-              {i === 0 && <span className="bg-white/20 px-3 py-1 rounded-full text-[10px] font-black leading-none">1.2k</span>}
-            </button>
-          ))}
-          <div className="ml-auto flex items-center gap-4 bg-white border-2 border-[#FFD08A] px-6 py-2.5 rounded-full shadow-sm">
-            <span className="text-[10px] text-[#D6A15E] font-black uppercase tracking-widest">Sort:</span>
-            <select className="bg-transparent border-none text-xs font-black text-primary focus:ring-0 cursor-pointer p-0 appearance-none uppercase tracking-widest">
-              <option>Alphabetical</option>
-              <option>Join Date</option>
-              <option>Tier</option>
-            </select>
+          <div className="flex flex-wrap items-center gap-3 border-r-2 border-[#FFD08A]/30 pr-4 mr-2">
+            {categories.map((cat) => (
+              <button 
+                key={cat} 
+                onClick={() => setActiveDept(cat)}
+                className={cn(
+                  "px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2",
+                  activeDept === cat ? "bg-primary text-white shadow-xl shadow-primary/20" : "bg-white border-2 border-[#FFD08A] text-[#D6A15E] hover:bg-[#FF8B3D] hover:text-white"
+                )}
+              >
+                {cat} 
+                {cat === 'All Teams' && <span className={cn("px-3 py-1 rounded-full text-[10px] font-black leading-none", activeDept === 'All Teams' ? "bg-white/20" : "bg-[#FFF5E1]")}>1.2k</span>}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4 bg-white border-2 border-[#FFD08A] px-6 py-2.5 rounded-full shadow-sm">
+            <div className="flex items-center gap-2 border-r border-[#FFD08A] pr-4">
+              <span className="text-[10px] text-[#D6A15E] font-black uppercase tracking-widest">Status:</span>
+              <select 
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="bg-transparent border-none text-xs font-black text-primary focus:ring-0 cursor-pointer p-0 appearance-none uppercase tracking-widest"
+              >
+                {statuses.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-[#D6A15E] font-black uppercase tracking-widest">Sort:</span>
+              <select className="bg-transparent border-none text-xs font-black text-primary focus:ring-0 cursor-pointer p-0 appearance-none uppercase tracking-widest">
+                <option>Alphabetical</option>
+                <option>Join Date</option>
+                <option>Tier</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {MOCK_EMPLOYEES.map((emp) => (
+        {filteredEmployees.map((emp) => (
           <div 
             key={emp.id} 
             onClick={() => onSelectEmployee(emp)}
@@ -96,6 +128,11 @@ export function Directory({ onSelectEmployee }: DirectoryProps) {
                     <div className="flex items-center gap-1.5 text-tertiary">
                       <Clock size={16} strokeWidth={2.5} />
                       <span className="text-[10px] font-black uppercase tracking-widest">Idle</span>
+                    </div>
+                  ) : emp.status === 'On Leave' ? (
+                    <div className="flex items-center gap-1.5 text-[#D6A15E]">
+                      <Filter size={16} strokeWidth={2.5} />
+                      <span className="text-[10px] font-black uppercase tracking-widest">On Leave</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-1.5 text-[#D6A15E]">
